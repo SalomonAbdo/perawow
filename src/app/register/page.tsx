@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { User, Mail, Lock, ShieldCheck, Info } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -20,6 +21,18 @@ export default function RegisterPage() {
 
     return (
         <main className="min-h-screen pt-32 pb-20 flex items-center justify-center bg-wow-dark px-4 relative overflow-hidden">
+
+            {/* Imagen de fondo con transparencia */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <Image
+                    src="/images/hordavsalianza.jpg"
+                    alt="WoW Background"
+                    fill
+                    priority
+                    className="object-cover object-top opacity-20 mix-blend-luminosity -translate-x-6 -translate-y-10 scale-[1.05]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-wow-dark/80 via-wow-dark/50 to-wow-dark/90" />
+            </div>
 
             {/* Textura de "Cuero de Dragón" (Fondo Global) mejorada para ser visible */}
             <div 
