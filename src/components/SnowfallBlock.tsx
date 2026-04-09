@@ -15,13 +15,13 @@ export default function SnowfallBlock() {
   useEffect(() => {
     // Patrones de viento variados: viento suave a moderado.
     const windPatterns: [number, number][] = [
-      [0.5, 1.5],    // Viento suave hacia la derecha
-      [-1.5, -0.5],  // Viento suave hacia la izquierda
-      [-0.2, 0.2],   // Calmado (cae casi recto)
-      [0.2, 0.8],    // Brisa ligera a la derecha
-      [-0.8, -0.2],  // Brisa ligera a la izquierda
-      [1.0, 2.0],    // Ráfaga media derecha
-      [-2.0, -1.0],  // Ráfaga media izquierda
+      [0.1, 0.4],    // Viento suave hacia la derecha
+      [-0.4, -0.1],  // Viento suave hacia la izquierda
+      [-0.05, 0.05], // Calmado (cae casi recto)
+      [0.05, 0.2],   // Brisa ligera a la derecha
+      [-0.2, -0.05], // Brisa ligera a la izquierda
+      [0.2, 0.6],    // Ráfaga media derecha
+      [-0.6, -0.2],  // Ráfaga media izquierda
     ];
 
     // Cambiar la dirección del viento cada 7 segundos
@@ -34,14 +34,14 @@ export default function SnowfallBlock() {
   }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-[100] h-full overflow-hidden transition-all duration-1000">
+    <div className="fixed inset-0 pointer-events-none z-[100] w-full h-full overflow-hidden">
       <Snowfall 
-        // Usa formato RGBA para asignar el color blanco con transparencia (ej. 60% opaco)
-        color="rgba(255, 255, 255, 0.2)"
-        snowflakeCount={100}
-        speed={[0.1, 0.5]}
+        // Aumentamos opacidad y cantidad para que sea visible
+        color="rgba(255, 255, 255, 0.15)"
+        snowflakeCount={150}
+        speed={[0.1, 0.4]}
         wind={wind} 
-        radius={[0.9, 5.0]}
+        radius={[1.0, 4.0]}
       />
     </div>
   );

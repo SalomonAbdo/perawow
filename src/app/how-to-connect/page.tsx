@@ -111,7 +111,7 @@ export default function HowToConnectPage() {
                                     </Link>
                                 )}
                             </div>
-                        </div>
+    |                    </div>
                     ))}
                 </div>
 
