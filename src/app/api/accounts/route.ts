@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getWso2Token } from "@/lib/wso2";
 
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
+        const token = await getWso2Token();
+
         const res = await fetch(`${process.env.API_URL}/accounts`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-API-Key": process.env.API_KEY || "",
+                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(body),
         });
@@ -23,9 +26,10 @@ export async function POST(req: NextRequest) {
         }
 
         return NextResponse.json(data, { status: 201 });
-    } catch {
+    } catch (err) {
+        const message = err instanceof Error ? err.message : "Error interno del servidor.";
         return NextResponse.json(
-            { error: "Error interno del servidor." },
+            { error: message },
             { status: 500 }
         );
     }
