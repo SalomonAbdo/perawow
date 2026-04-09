@@ -33,12 +33,11 @@ export default function RegisterPage() {
         }
 
         try {
-            // Petición a la API de Go usando las variables de entorno
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts`, {
+            // Petición a la API Route interna de Next.js (server-side proxy)
+            const response = await fetch('/api/accounts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-API-Key': process.env.NEXT_PUBLIC_API_KEY || "", // Protección de API_KEY
                 },
                 body: JSON.stringify({
                     username: formData.username,
@@ -57,8 +56,9 @@ export default function RegisterPage() {
             setStatus({ type: 'success', msg: "¡Cuenta creada con éxito! Ya puedes entrar al juego." });
             setFormData({ username: "", email: "", password: "", confirmPassword: "" });
 
-        } catch (err: any) {
-            setStatus({ type: 'error', msg: err.message });
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : "Error inesperado.";
+            setStatus({ type: 'error', msg: message });
         } finally {
             setLoading(false);
         }

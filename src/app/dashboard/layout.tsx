@@ -8,12 +8,10 @@ export default async function DashboardLayout({
                                               }: {
     children: React.ReactNode;
 }) {
+    // El middleware ya redirige a /login si no hay sesión.
+    // Este check es una segunda capa de defensa (SSR).
     const session = await auth();
-
-    // Protección de ruta: Si no hay sesión, al login
-    if (!session) {
-        redirect("/login");
-    }
+    if (!session) redirect("/login");
 
     return (
         <div className="min-h-screen bg-wow-dark flex">

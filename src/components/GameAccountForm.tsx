@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { ShieldCheck, Lock, User, Loader2 } from "lucide-react";
+import { ShieldCheck, Loader2 } from "lucide-react";
 
 export default function GameAccountForm({ email }: { email: string }) {
     const [loading, setLoading] = useState(false);
@@ -11,17 +11,16 @@ export default function GameAccountForm({ email }: { email: string }) {
         setLoading(true);
 
         try {
-            // Llamamos a tu API de Go que ya tiene el SRP6 listo
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/accounts`, {
+            // Llamamos a la API Route interna de Next.js (server-side proxy)
+            const response = await fetch('/api/accounts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-API-Key': process.env.NEXT_PUBLIC_API_KEY || "",
                 },
                 body: JSON.stringify({
                     username: formData.username,
                     password: formData.password,
-                    email: email, // Usamos el email verificado por Google
+                    email: email,
                 }),
             });
 

@@ -13,12 +13,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 if (!credentials?.username || !credentials?.password) return null
 
                 // Llamamos a tu API en Go
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+                const res = await fetch(`${process.env.API_URL}/login`, {
                     method: 'POST',
                     body: JSON.stringify(credentials),
                     headers: {
                         "Content-Type": "application/json",
-                        "X-API-Key": process.env.NEXT_PUBLIC_API_KEY || ""
+                        "X-API-Key": process.env.API_KEY || ""
                     }
                 })
 
