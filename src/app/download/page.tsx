@@ -41,10 +41,10 @@ export default function DownloadPage() {
             {/* --- FONTO DE AMBIENTACIÓN --- */}
             <div className="absolute inset-0 z-0 opacity-20 grayscale pointer-events-none">
                 <Image
-                    src="/images/azeroth.webp"
+                    src="/images/cofres.png"
                     alt="Background"
                     fill
-                    className="object-cover"
+                    className="object-cover object-[75%_70%]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-wow-dark via-transparent to-wow-dark" />
             </div>
