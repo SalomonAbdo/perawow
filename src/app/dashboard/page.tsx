@@ -3,12 +3,24 @@ import { Shield, Clock, Trophy, Swords } from "lucide-react";
 
 export default async function DashboardPage() {
     const session = await auth();
+    const userId = session?.user?.id || "1";
+
+    let dashboardData = {
+        status: "Inactiva", rank: "Jugador", totalCharacters: 0, onlineTime: "0h", notices: "Sin novedades", version: "v1.0.0"
+    };
+
+    try {
+        const res = await fetch(`${process.env.API_URL}/accounts/dashboard/${userId}`, { cache: 'no-store' });
+        if (res.ok) {
+            dashboardData = await res.json();
+        }
+    } catch (e) {}
 
     const stats = [
-        { label: "Estatus", value: "Activa", icon: Shield, color: "text-green-400" },
-        { label: "Rango", value: "Jugador", icon: Trophy, color: "text-wow-gold" },
-        { label: "Personajes", value: "0", icon: Swords, color: "text-wow-blue" },
-        { label: "Total Online", value: "0h", icon: Clock, color: "text-purple-400" },
+        { label: "Estatus", value: dashboardData.status || "Activa", icon: Shield, color: "text-green-400" },
+        { label: "Rango", value: dashboardData.rank || "Jugador", icon: Trophy, color: "text-wow-gold" },
+        { label: "Personajes", value: dashboardData.totalCharacters?.toString() || "0", icon: Swords, color: "text-wow-blue" },
+        { label: "Total Online", value: dashboardData.onlineTime || "0h", icon: Clock, color: "text-purple-400" },
     ];
 
     return (
@@ -43,7 +55,11 @@ export default async function DashboardPage() {
                 </div>
                 <div className="p-8">
                     <p className="text-wow-blue-gray leading-relaxed italic">
-                        &quot;Para entrar al juego, asegúrate de configurar tu **realmlist** a: <span className="text-white font-mono not-italic">set realmlist localhost</span>&quot;
+                        {dashboardData.notices ? (
+                            <span>{dashboardData.notices}</span>
+                        ) : (
+                            <>&quot;Para entrar al juego, asegúrate de configurar tu **realmlist** a: <span className="text-white font-mono not-italic">set realmlist localhost</span>&quot;</>
+                        )}
                     </p>
                 </div>
             </div>

@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, User, ChevronDown, LayoutDashboard, LogOut, Shield } from "lucide-react";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { logoutAction } from "@/actions/auth";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +97,7 @@ export default function Navbar() {
                                                 </Link>
                                                 <div className="h-px bg-gray-800 my-1 mx-2" />
                                                 <button
-                                                    onClick={() => signOut()}
+                                                    onClick={() => logoutAction()}
                                                     className="w-full flex items-center gap-3 px-4 py-3 text-xs font-bold text-red-400 hover:bg-red-500/10 transition-colors uppercase tracking-widest"
                                                 >
                                                     <LogOut className="size-4" />
@@ -158,7 +159,7 @@ export default function Navbar() {
                                     Dashboard ({(session.user as Record<string, unknown>)?.username as string || session.user?.name})
                                 </Link>
                                 <button
-                                    onClick={() => signOut()}
+                                    onClick={() => logoutAction()}
                                     className="w-full flex items-center gap-3 text-red-400 px-3 py-4 text-base font-bold uppercase tracking-widest"
                                 >
                                     <LogOut className="size-5" />

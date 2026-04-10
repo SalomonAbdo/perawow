@@ -11,7 +11,7 @@ import {
     ChevronRight,
     Sword
 } from "lucide-react";
-import { signOut } from "next-auth/react";
+import { logoutAction } from "@/actions/auth";
 
 interface SidebarProps {
     user: any;
@@ -109,7 +109,7 @@ export default function Sidebar({ user }: SidebarProps) {
                 </div>
 
                 <button
-                    onClick={() => signOut({ callbackUrl: "/login" })}
+                    onClick={() => logoutAction()}
                     className="w-full flex items-center gap-3 px-4 py-3.5 text-red-400/80 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all duration-300 font-black text-xs uppercase tracking-[0.2em] border border-transparent hover:border-red-500/20"
                 >
                     <LogOut className="size-4" />

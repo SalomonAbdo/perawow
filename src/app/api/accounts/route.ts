@@ -1,17 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getWso2Token } from "@/lib/wso2";
 
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
-        const token = await getWso2Token();
-
+        // Eliminamos el token de wso2 para la Go API local
         const res = await fetch(`${process.env.API_URL}/accounts`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(body),
         });
@@ -34,4 +31,3 @@ export async function POST(req: NextRequest) {
         );
     }
 }
-

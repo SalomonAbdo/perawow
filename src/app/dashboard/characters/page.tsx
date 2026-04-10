@@ -1,15 +1,19 @@
-"use client";
 
-import { Swords, MapPin, Shield, Zap, Target } from "lucide-react";
+import { MapPin, Shield } from "lucide-react";
+import { auth } from "@/auth";
 
-const mockCharacters = [
-    { name: "Arthas", race: "Humano", class: "Death Knight", level: 80, online: true, zone: "Icecrown Citadel", color: "#C41F3B" },
-    { name: "Sylvanas", race: "No-muerto", class: "Hunter", level: 80, online: false, zone: "Undercity", color: "#ABD473" },
-    { name: "Uther", race: "Humano", class: "Paladin", level: 72, online: false, zone: "Stormwind City", color: "#F58CBA" },
-    { name: "Jaina", race: "Humano", class: "Mage", level: 80, online: true, zone: "Dalaran", color: "#69CCF0" },
-];
+export default async function CharactersPage() {
+    const session = await auth();
+    const userId = session?.user?.id || "1";
 
-export default function CharactersPage() {
+    let characters: any[] = [];
+    try {
+        const res = await fetch(`${process.env.API_URL}/accounts/characters/${userId}`, { cache: 'no-store' });
+        if (res.ok) {
+            characters = await res.json();
+        }
+    } catch(e) {}
+
     return (
         <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-700">
 
@@ -61,7 +65,13 @@ export default function CharactersPage() {
 
                     {/* Lista de Personajes */}
                     <div className="divide-y divide-white/5">
-                        {mockCharacters.map((char) => (
+                        {characters.length === 0 && (
+                            <div className="p-8 text-center text-wow-blue-gray text-sm space-y-2">
+                                <p>Aún no has creado ningún personaje.</p>
+                                <p className="text-[10px] uppercase">Crea uno dentro del juego para verlo aquí.</p>
+                            </div>
+                        )}
+                        {characters.map((char: any) => (
                             <div
                                 key={char.name}
                                 className="grid grid-cols-12 gap-4 px-8 py-6 items-center hover:bg-white/[0.03] transition-all group"
@@ -79,7 +89,7 @@ export default function CharactersPage() {
                                 <div className="col-span-4 flex items-center gap-4">
                                     <div
                                         className="w-1.5 h-8 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                                        style={{ backgroundColor: char.color }}
+                                        style={{ backgroundColor: char.color || '#C41F3B' }}
                                     />
                                     <span className="text-xl font-bold text-white uppercase tracking-tighter group-hover:text-wow-gold transition-colors">
                                         {char.name}
@@ -100,7 +110,7 @@ export default function CharactersPage() {
                                 <div className="col-span-3 flex items-center gap-2">
                                     <MapPin size={14} className="text-wow-blue opacity-50" />
                                     <span className="text-[11px] font-bold text-wow-blue-gray uppercase truncate tracking-wide">
-                                        {char.zone}
+                                        {char.zone || "Desconocida"}
                                     </span>
                                 </div>
 

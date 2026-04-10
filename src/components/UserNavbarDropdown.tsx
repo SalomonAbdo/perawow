@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 import { LayoutDashboard, LogOut, User as UserIcon, Shield } from "lucide-react";
+import { logoutAction } from "@/actions/auth";
 
 export default function UserNavbarDropdown({ user }: { user: any }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ export default function UserNavbarDropdown({ user }: { user: any }) {
                         <div className="h-px bg-gray-800 my-2 mx-4" />
 
                         <button
-                            onClick={() => signOut()}
+                            onClick={() => logoutAction()}
                             className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-400 hover:bg-red-500/10 transition-colors font-bold"
                         >
                             <LogOut className="size-4" />
