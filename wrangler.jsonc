@@ -10,5 +10,9 @@
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
+  },
+  "vars": {
+    "API_URL": "https://hcsba-api.hcsba.cl/perapi/v1",
+    "API_TOKEN": "https://hcsba-api.hcsba.cl/oauth2/token"
   }
 }
